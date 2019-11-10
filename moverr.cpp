@@ -1,8 +1,6 @@
 #include <iostream>
 #include <string>
 
-// issue: can't make gloval array, therefore can't make funttion
-// maybe add trail like snake
 using namespace std;
 
   int row=10;
