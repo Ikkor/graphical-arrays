@@ -1,0 +1,128 @@
+
+final int BUTTONSIZE=50;
+final int BUTTONSX=5;
+final int BUTTONSY=5;
+boolean [][] ButtonState;
+
+int boxSize = 75;
+float by,bx=300;
+float xOffset = 0.0; 
+float yOffset = 0.0; 
+
+boolean hoverbox = false;
+boolean locked = false;
+void setup()
+{
+  size(650,600);
+  // create button state array
+  ButtonState=new boolean[BUTTONSY][BUTTONSX];
+  
+  // by default, the "origin" for ellipses is at the centre
+  // we can change this to the top-left corner, using ellipseMode(),
+  // which simplifies the button detection later on
+  ellipseMode(CORNER);
+  
+  // set all buttons to "off" (true==on, false==off)
+ makingred(); 
+}
+void makingred(){
+  for (int row=0; row<BUTTONSY; row++)    //function to make green buttons red
+    for (int col=0; col<BUTTONSX; col++)
+      ButtonState[row][col]=false;}
+      
+void draw()
+{
+  // clear the background
+  background(0);
+  
+  // for each button...
+  for (int row=0; row<BUTTONSY; row++)
+  {
+    for (int col=0; col<BUTTONSX; col++)
+    {
+      if (ButtonState[row][col]==true) // if it's "on"
+      {
+        fill(0,255,0); // green
+        stroke(0,255,0);
+      }
+      else // "off"
+      {
+        fill(200,0,0); // red
+        stroke(250,0,0);
+      }
+      ellipse((col+1)*BUTTONSIZE*2, (row+1)*BUTTONSIZE*2, BUTTONSIZE, BUTTONSIZE); // draw button
+    }
+  }
+  
+  
+  //reset buutton graphics
+  
+  // change color os reset button when hover 
+  if (mouseX > bx-boxSize && mouseX < bx+boxSize && 
+      mouseY > by-boxSize && mouseY < by+boxSize) {
+    hoverbox = true;  
+    if(!locked) { 
+      stroke(34); 
+      fill(67);
+    } 
+  } else {
+    stroke(153);
+    fill(-23);
+    hoverbox = false;
+  }
+  
+  // Draw the box
+  rect(bx, by, boxSize, boxSize);
+}
+  
+  
+
+void mouseClicked()
+{
+   println("Mouse click at "+mouseX+", "+mouseY);
+  
+  // variable to store index of button that was pressed
+  int whichx=-1;
+  int whichy=-1;
+    
+//detecting clicks for reset button
+if(hoverbox) { 
+    locked = true; 
+    fill(255, 0, 255);
+      makingred();
+  
+  } else {
+    locked = false;
+  }
+  xOffset = mouseX-bx; 
+  yOffset = mouseY-by; 
+
+
+
+  
+   // for each button...
+  for (int row=0; row<BUTTONSY; row++)
+  {
+    for (int col=0; col<BUTTONSX; col++)
+    {
+       // calculate x and y position of top-left of button
+       int x=(col+1)*BUTTONSIZE*2;
+       int y=(row+1)*BUTTONSIZE*2;
+    
+       // if the mouse pointer is "inside" this button's region
+    if ((mouseX>=x && mouseX<=x+BUTTONSIZE) && (mouseY>=y && mouseY<=y+BUTTONSIZE))
+      // set the "which" variable to this button
+    {
+      whichx=col;
+      whichy=row;
+    }
+   }  
+  }
+  
+  // if we detected a click inside one of the buttons...
+  if (whichx != -1)
+  {
+    // flip that button's state
+    ButtonState[whichy][whichx]=!ButtonState[whichy][whichx];
+  }
+}
