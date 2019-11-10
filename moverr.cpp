@@ -28,7 +28,7 @@ int game[row][col]={};
     game[goalx][goaly]=8;
 
        for(int i=0;i<row;i++){
-            for(int j=0;j<col;j++)
+            for(int j=0;j<col;j++) //representing the 2d array
             {if (game[i][j]==8){cout << "X";} else
             if(game[i][j]==1){cout << "P";} else
                 cout <<" ";
