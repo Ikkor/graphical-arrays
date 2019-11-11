@@ -111,8 +111,5 @@ while(true){
 
 
 
-// korimbocus ikhlas
-
-
 
 
